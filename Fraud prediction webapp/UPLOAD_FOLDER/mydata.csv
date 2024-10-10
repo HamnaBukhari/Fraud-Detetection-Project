@@ -1,0 +1,7 @@
+Category,TransactionAmount,AnomalyScore,Amountdata,AccountBalance,Hour,gap
+Retail,200.5,0,100.25,5000.75,15,120
+Retail,75.659944,0,37.182412,8935.007146,8,346
+Food,150.75,0,75.37,3200.5,10,30
+Food,1000,0,500,20000,18,180
+Food,250.25,0,125.12,2500.75,14,90
+chair,70,0,40,9000,7,350

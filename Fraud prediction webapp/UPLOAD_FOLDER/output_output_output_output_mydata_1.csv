@@ -1,0 +1,8 @@
+Category,TransactionAmount,AnomalyScore,Amount,AccountBalance,SuspiciousFlag,Hour,gap,Prediction,Error
+Retail,200.5,0.01,100.25,5000.75,0.0,15.0,120.0,0.0,Success
+Retail,75.659944,0.010471,37.182412,8935.007146,0.0,8.0,346.0,1.0,Success
+Food,150.75,0.02,75.37,3200.5,0.0,10.0,30.0,0.0,Success
+Food,1000.0,0.1,500.0,20000.0,1.0,18.0,180.0,0.0,Success
+Food,250.25,0.03,125.12,2500.75,0.0,14.0,90.0,0.0,Success
+,544.0,,,,,,,,"Error in row: 5. Details: Input X contains NaN.
+RandomForestClassifier does not accept missing values encoded as NaN natively. For supervised learning, you might want to consider sklearn.ensemble.HistGradientBoostingClassifier and Regressor which accept missing values encoded as NaNs natively. Alternatively, it is possible to preprocess the data, for instance by using an imputer transformer in a pipeline or drop samples with missing values. See https://scikit-learn.org/stable/modules/impute.html You can find a list of all estimators that handle NaN values at the following page: https://scikit-learn.org/stable/modules/impute.html#estimators-that-handle-nan-values"

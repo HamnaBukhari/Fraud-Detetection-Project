@@ -1,0 +1,6 @@
+Category,TransactionAmount,AnomalyScore,Amount,AccountBalance,SuspiciousFlag,Hour,gap,Prediction
+Retail,200.5,0.01,100.25,5000.75,0,15,120,0
+Retail,75.659944,0.010471,37.182412,8935.007146,0,8,346,1
+Food,150.75,0.02,75.37,3200.5,0,10,30,0
+Food,1000.0,0.1,500.0,20000.0,1,18,180,0
+Food,250.25,0.03,125.12,2500.75,0,14,90,0

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Fraud Detection</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f4f7f6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container {
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background: #fff;
+            padding: 20px;
+        }
+        .notification {
+            margin-top: 20px;
+        }
+        .download-link {
+            display: inline-block;
+            margin-top: 20px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+        .download-link:hover {
+            text-decoration: none;
+            background-color: #e9ecef;
+        }
+        footer {
+            padding: 10px 0;
+            background-color: #f8f9fa;
+        }
+        .progress {
+            height: 20px;
+        }
+        .progress-bar {
+            background-color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Fraud Detection</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/help">Help</a>
+                    </li>
+                  
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="text-center my-5">
+        <h1>Financial Fraud Detection</h1>
+        <p>Upload your financial data in a CSV file to detect potential frauds.</p>
+    </header>
+
+    <div class="container my-5">
+   
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="notification">
+            {% for message in messages %}
+              <div class="alert alert-warning" role="alert">
+                {{ message }}
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+        <!-- Flash messages will be placed here -->
+        <form method="post" action="/" enctype="multipart/form-data" id="uploadForm">
+            <div class="mb-3">
+                <input type="file" class="form-control" id="fileInput" name="file" accept=".csv" required>
+                <label class="form-label" for="fileInput">Choose file</label>
+            </div>
+            <button type="submit" class="btn btn-success">Upload and Check for Fraud</button>
+            <div class="progress mt-3">
+                <div class="progress-bar" role="progressbar" id="progressBar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </form>
+
+        <a href="/download_sample" class="btn btn-secondary download-link mt-3">Download Sample Input File</a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <p>© 2023 Financial Fraud Detection. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <!-- Bootstrap JS, Popper.js, and Bootstrap Bundle JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-GLhlTQ8iRABdZLl9eZ6t8jl8tNRxryW+4Z5TP3eus3eGQ5Iu6fDySi/6p1uKq9/g" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+abtDEZTV9lPpL3" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ44jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3sF7EL9VPDhBpCbPkZmMx9ATKxIep9HF6CJ1z1zj+nHtbC5bxDiChP" crossorigin="anonymous"></script>
+   
+   <script>
+        document.getElementById('uploadForm').addEventListener('submit', function (e) {
+            const fileInput = document.getElementById('fileInput');
+            const progressBar = document.getElementById('progressBar');
+            if (fileInput.files.length > 0) {
+                const updateProgress = (loaded, total) => {
+                    const percentage = (loaded / total) * 100;
+                    progressBar.style.width = percentage + '%';
+                    progressBar.setAttribute('aria-valuenow', percentage);
+                    progressBar.textContent = Math.round(percentage) + '%';
+                };
+    
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '/', true);
+                xhr.upload.onprogress = function (e) {
+                    if (e.lengthComputable) {
+                        updateProgress(e.loaded, e.total);
+                    }
+                };
+                xhr.onloadstart = function (e) {
+                    updateProgress(0, 100);
+                };
+                xhr.onloadend = function (e) {
+                    updateProgress(100, 100);
+                    setTimeout(function () {
+                        progressBar.style.width = '0%';
+                        progressBar.setAttribute('aria-valuenow', 0);
+                        progressBar.textContent = '0%';
+                    }, 1000);
+                };
+            }
+        });
+
+        // Update the label of the file input when a file is selected
+        $('.custom-file-input').on('change', function () {
+            var fileName = $(this).val().split('\\').pop();
+            $(this).siblings('.custom-file-label').addClass('selected').html(fileName);
+        });
+    </script>
+
+<script>
+    const fileInput = document.getElementById('fileInput');
+    const progressBar = document.getElementById('progressBar');
+    const notification = document.querySelector('.notification');
+
+    fileInput.addEventListener('change', function() {
+        // Reset the progress bar when a new file is chosen
+        progressBar.style.width = '0%';
+        progressBar.setAttribute('aria-valuenow', 0);
+        progressBar.textContent = '0%';
+
+        // Hide the notification message if it is visible
+        if (notification) {
+            notification.style.display = 'none';
+        }
+    });
+
+    document.getElementById('uploadForm').addEventListener('submit', function(e) {
+        if (fileInput.files.length > 0) {
+            const updateProgress = (loaded, total) => {
+                const percentage = (loaded / total) * 100;
+                progressBar.style.width = percentage + '%';
+                progressBar.setAttribute('aria-valuenow', percentage);
+                progressBar.textContent = Math.round(percentage) + '%';
+            };
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/', true);
+            xhr.upload.onprogress = function(e) {
+                if (e.lengthComputable) {
+                    updateProgress(e.loaded, e.total);
+                }
+            };
+            xhr.onloadstart = function(e) {
+                updateProgress(0, 100);
+            };
+            xhr.onloadend = function(e) {
+                updateProgress(100, 100);
+                setTimeout(function() {
+                    progressBar.style.width = '0%';
+                    progressBar.setAttribute('aria-valuenow', 0);
+                    progressBar.textContent = '0%';
+                }, 1000);
+            };
+        }
+    });
+</script>
+
+
+  </script>
+</body>
+</html>
